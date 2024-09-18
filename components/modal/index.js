@@ -1,42 +1,19 @@
 import React, { useRef } from 'react';
-import { View, StyleSheet, Animated, PanResponder } from "react-native";
+import { View, StyleSheet, Animated, TouchableOpacity } from "react-native";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 export function ModalViagem({ fechar }) {
-  const pan = useRef(new Animated.ValueXY()).current;
-
-  // Criando o PanResponder para capturar o arrastar
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event(
-        [
-          null,
-          { dy: pan.y }  // Movendo verticalmente
-        ],
-        { useNativeDriver: false }
-      ),
-      onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dy > 50) {
-          fechar();
-        } else {
-          Animated.spring(pan, {
-            toValue: { x: 0, y: 0 },
-            useNativeDriver: false,
-          }).start();
-        }
-      },
-    })
-  ).current;
-
   return (
     <View style={styles.container}>
+      
+      {/* Botão invisível para fechar o modal */}
+      <TouchableOpacity style={styles.botaoinvisivel} onPress={fechar}>
+        <View />
+      </TouchableOpacity>
+
       <View style={styles.conteudopesquisa}>
         {/* Linha que pode ser arrastada */}
-        <Animated.View
-          style={[styles.line, { transform: [{ translateY: pan.y }] }]}
-          {...panResponder.panHandlers}
-        />
+        <Animated.View style={[styles.line]} />
 
         {/* GooglePlacesAutocomplete */}
         <GooglePlacesAutocomplete
@@ -46,12 +23,12 @@ export function ModalViagem({ fechar }) {
             console.log(data, details);
           }}
           query={{
-            key: 'AIzaSyDgRNpVHxeabrd7SvG6WgALeXiSi5-JdAs',  // Substitua com sua API key
-            language: 'pt-BR',  // Define o idioma
+            key: 'AIzaSyDgRNpVHxeabrd7SvG6WgALeXiSi5-JdAs', // Substitua com sua API key
+            language: 'pt-BR',  
           }}
           fetchDetails={true}  // Para obter mais detalhes
           styles={{
-            textInput: styles.textopesquisa,  // Aplica o estilo personalizado
+            textInput: styles.textopesquisa,  
             listView: styles.suggestionList,  // Personaliza a lista de sugestões
           }}
         />
@@ -66,6 +43,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  
+  botaoinvisivel: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',  
+    zIndex: 1,
+  },
+
   conteudopesquisa: {
     width: '100%',
     height: '85%',
@@ -73,6 +61,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     alignItems: 'center',
     borderRadius: 40,
+    zIndex: 2,  // Para garantir que fique acima do botão invisível
   },
 
   line: {

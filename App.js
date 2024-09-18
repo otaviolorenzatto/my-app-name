@@ -31,8 +31,10 @@ export default function App() {
       <Modal visible={mostraModal} animationType='fade' transparent={true}> 
         <ModalViagem fechar={() => setMostraModal(false)}/>
       </Modal>
-    </View>
-    
+
+      
+
+    </View> 
   );
 }
 
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     width: 98,
     height: 83,
     marginBottom: 24,
-    marginTop: 24,
+    marginTop: 100,
     
   },
 
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
 
   texto:{
     color: 'rgba(255,255,255,0.50)',
-    fontSize: 22,
+    fontSize: 22,     
   },
 
   textobotao:{
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
 
   botao:{
     backgroundColor: '#0E6EFF',
-    marginTop: 28, 
+    marginTop: 50, 
     width: 315,
     height: 51,
     borderRadius: 40, 
@@ -91,6 +93,12 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 2,
     backgroundColor: 'rgba(255,255,255,0.50)',
-    marginTop: 60,
-  }
+    marginTop: 80,
+  },
+
+  rodape:{
+
+  },
+
+  
 });
