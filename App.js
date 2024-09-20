@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Modal } from 'react-native';
-import logo from './assets/logo.png'
-import fundomenu from './assets/fundomenu.png'
+import logo from './assets/logo.png';
+import fundomenu from './assets/fundomenu.png';
 import { ModalViagem } from './components/modal';
 import { useState } from 'react';
 import pessoa from './assets/pessoa.png';
@@ -38,26 +38,29 @@ export default function App() {
       
       <View style={styles.linha}></View>
       <View style={styles.rodapeContainer}>
+
       {/* Botão da casa */}
       <TouchableOpacity>
-        <View style={styles.iconecontainer}>
+        <View style={styles.casinhacontainer}>
           <Image
-            source={'./assets/casinha.png'} 
-            style={styles.icone}
+            source={casinha} 
+            style={styles.casinha}
           />
         </View>
       </TouchableOpacity>
 
       {/* Botão da pessoa */}
       <TouchableOpacity>
-        <View style={styles.iconecontainer}>
+        <View style={styles.pessoacontainer} >
           <Image
-            source={'./assets/pessoa'} 
-            style={styles.icone}
+            source={pessoa} 
+            style={styles.pessoa}
           />
         </View>
       </TouchableOpacity>
+        
     </View>
+
       <Modal visible={mostraModal} animationType='fade' transparent={true}> 
         <ModalViagem fechar={() => setMostraModal(false)}/>
       </Modal>
@@ -73,13 +76,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#00050D',
     alignItems: 'center',
-    justifyContent: 'space-between', // Distribui o conteúdo verticalmente
-    paddingVertical: 20, // Adiciona padding vertical
+    justifyContent: 'space-between', 
+    paddingVertical: 20, 
   },
 
   header: {
     alignItems: 'center',
-    marginTop: 50, // Adiciona espaçamento no topo
+    marginTop: 50, 
   },
 
   logo: {
@@ -128,29 +131,45 @@ const styles = StyleSheet.create({
 
   linha: {
     width: '90%',
-    height: 2,
+    height: 1,
     backgroundColor: 'rgba(255,255,255,0.50)',
-    marginTop: 100,
+    marginTop: 130,
   },
 
   rodapeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '90%', // Garante que o rodapé ocupe a maior parte da largura da tela
-    paddingVertical: 20,
+    width: '80%', 
+    paddingVertical: 10,
   },
 
-  iconecontainer: {
+  casinhacontainer: {
     backgroundColor: '#0A1A2F', 
-    padding: 15,
+    padding: 20,
     borderRadius: 10,
     marginBottom: 20,
+    paddingHorizontal: 50,
   },
 
-  icone: {
-    width: 24,
-    height: 24,
+  pessoacontainer:{
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    paddingHorizontal: 50,
+  },
+
+  pessoa:{
+    width: 30,
+    height: 30,
     tintColor: '#fff', 
   },
+
+  casinha: {
+    width: 30,
+    height: 30,
+    tintColor: '#0E6EFF', 
+  },
+
+  
   
 });

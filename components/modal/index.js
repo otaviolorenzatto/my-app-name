@@ -1,15 +1,12 @@
-import React, { useRef } from 'react';
+import React from "react";
 import { View, StyleSheet, Animated, TouchableOpacity } from "react-native";
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 export function ModalViagem({ fechar }) {
   return (
     <View style={styles.container}>
-      
       {/* Botão invisível para fechar o modal */}
-      <TouchableOpacity style={styles.botaoinvisivel} onPress={fechar}>
-        <View />
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.botaoinvisivel} onPress={fechar}></TouchableOpacity>
 
       <View style={styles.conteudopesquisa}>
         {/* Linha que pode ser arrastada */}
@@ -19,17 +16,20 @@ export function ModalViagem({ fechar }) {
         <GooglePlacesAutocomplete
           placeholder="Qual o seu destino?"
           onPress={(data, details = null) => {
-            // 'details' is provided when fetchDetails = true
             console.log(data, details);
           }}
           query={{
-            key: 'AIzaSyDgRNpVHxeabrd7SvG6WgALeXiSi5-JdAs', // Substitua com sua API key
-            language: 'pt-BR',  
+            key: "AIzaSyDgRNpVHxeabrd7SvG6WgALeXiSi5-JdAs",
+            language: "pt-BR",
           }}
-          fetchDetails={true}  // Para obter mais detalhes
+          fetchDetails={true}
           styles={{
-            textInput: styles.textopesquisa,  
-            listView: styles.suggestionList,  // Personaliza a lista de sugestões
+            textInput: styles.textopesquisa,
+            listView: styles.suggestionList,
+          }}
+          textInputProps={{
+            placeholderTextColor: "rgba(255,255,255,0.65)",
+            style: styles.textopesquisa,
           }}
         />
       </View>
@@ -39,50 +39,52 @@ export function ModalViagem({ fechar }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#00050D',
+    backgroundColor: "#00050D",
     flex: 1,
   },
 
-  
   botaoinvisivel: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'transparent',  
+    backgroundColor: "transparent",
     zIndex: 1,
   },
 
   conteudopesquisa: {
-    width: '100%',
-    height: '85%',
-    backgroundColor: '#071222',
+    width: "100%",
+    height: "85%",
+    backgroundColor: "#071222",
     marginTop: 100,
-    alignItems: 'center',
+    alignItems: "center",
     borderRadius: 40,
-    zIndex: 2,  // Para garantir que fique acima do botão invisível
+    zIndex: 2,
   },
 
   line: {
-    width: '15%',
+    width: "15%",
     height: 3,
-    backgroundColor: 'rgba(255,255,255,0.50)',
+    backgroundColor: "rgba(255,255,255,0.50)",
     marginTop: 7,
   },
 
   textopesquisa: {
-    backgroundColor: '#00050D',
+    width: 350,   
+    backgroundColor: "#00050D",
     marginTop: 28,
-    width: 315,
+    maxWidth: 315,
     height: 51,
     borderRadius: 40,
-    paddingLeft: 24,
-    color: 'rgba(255,255,255,0.65)',
+    paddingLeft: 34,
+    color: "rgba(255,255,255,0.65)",
+    alignSelf: 'center',
+    justifyContent: "center",
   },
 
   suggestionList: {
-    backgroundColor: '#071222',
+    backgroundColor: "#071222",
     borderRadius: 20,
   },
 });
