@@ -1,39 +1,38 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Login from "../components/Login/Login";
-import Cadastro from "../components/Cadastro/Cadastro";
-import AddNovaViagem from "../components/AddNovaViagem/AddNovaViagem";
-import { ModalViagem } from "../components/modal/pesquisaC.E.P";
+import Login from "../src/modules/login/view/login";
+import Cadastro from "../src/modules/cadastro/view/cadastro";
+import AddNovaViagem from "../components/AddNovaViagem/AddNovaViagem.js";
+import { ModalViagem } from "../components/modal/index.js";
 
-const Stack = createNativeStackNavigator(); 
+const Stack = createNativeStackNavigator();
 
 export default function rotas() {
-    return(
-        <Stack.Navigator>
-
-        <Stack.Screen
-        name = "Cadastro"
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Cadastro"
         component={Cadastro}
-        options={{headerShown: false}}
-        />
+        options={{ headerShown: false }}
+      />
 
-        <Stack.Screen
-        name = "Login"
+      <Stack.Screen
+        name="Login"
         component={Login}
-        options={{headerShown: false}}
-        />
+        options={{ headerShown: false }}
+      />
 
-        <Stack.Screen
-        name = "AddNovaViagem"
+      <Stack.Screen
+        name="AddNovaViagem"
         component={AddNovaViagem}
-        options={{headerShown: false}}
-        />
+        options={{ headerShown: false }}
+      />
 
-        <Stack.Screen
-        name = "ModalViagem"
+      <Stack.Screen
+        name="ModalViagem"
         component={ModalViagem}
-        options={{headerShown: false}}
-        />
-        </Stack.Navigator>
-    )
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
 }

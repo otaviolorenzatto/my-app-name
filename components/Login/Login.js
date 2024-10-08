@@ -2,19 +2,32 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'reac
 import React, { useState } from 'react'; 
 import { useNavigation } from '@react-navigation/native'; 
 import logo from '../../assets/logo.png';
-
-
-
+import axios from 'axios';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
   const [showPassword, setShowPassword] = useState(false);
 
   const navigation = useNavigation(); 
+
+  const handleLogin = async () => {
+    try {
+      // Fazendo a requisição POST para o endpoint da API
+      const response = await axios.post('https://traveler-api-n420.onrender.com/auth/login', {
+        email: email,
+        senha: password,
+      });
+
+      if (response.status === 200) {
+        Alert.alert("Sucesso", "Logado realizado com sucesso!");
+        navigation.navigate('AddNovaViagem');  // Navega para a tela de AddNovaViagem após o cadastro
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Erro", "Ocorreu um erro ao tentar entrar.");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -23,15 +36,7 @@ export default function Login() {
         <Text style={styles.titulo}>traveler</Text>
       </View>
 
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Nome de Usuário"
-          placeholderTextColor="white"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-        />
-
+      <View style={styles.form}>        
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -40,25 +45,24 @@ export default function Login() {
           onChangeText={(text) => setEmail(text)}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Nova senha"
-          placeholderTextColor="white"
-          onPress={() => setShowPassword(!showPassword)}
-          value={password}
-          onChangeText={(text) => setPassword(text)}       
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="Confirmar nova senha"
-          placeholderTextColor="white"
-          value={confirmPassword}
-          onChangeText={(text) => setConfirmPassword(text)}
-        />
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            placeholderTextColor="white"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Text style={styles.showPasswordText}>
+              {showPassword ? 'Esconder' : 'Mostrar'}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <TouchableOpacity style={styles.botaoCadastrar}>
+      <TouchableOpacity style={styles.botaoCadastrar} onPress={handleLogin}>
         <Text style={styles.textobotao}>Entrar</Text>
       </TouchableOpacity>
 
@@ -107,6 +111,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     padding: 10,  
   },
+  passwordContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  showPasswordText: {
+    color: '#FFF',
+    fontSize: 14,
+  },
   botaoCadastrar: {
     backgroundColor: '#007AFF',  
     padding: 15,
@@ -115,6 +128,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,  
     marginBottom: 30,
     marginTop: 50,
+    borderRadius: 40,
   },
   textobotao: {
     color: '#FFF',
@@ -132,7 +146,6 @@ const styles = StyleSheet.create({
   linha: {
     borderBottomWidth: 1, 
     borderBottomColor: '#FFF', 
-    width: '80%', 
     marginTop: 5, 
     width: 150,
   },

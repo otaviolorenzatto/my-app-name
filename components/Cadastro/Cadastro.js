@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
 import React, { useState } from 'react'; 
 import { useNavigation } from '@react-navigation/native'; 
+import axios from 'axios';  // Importando o axios
 import logo from '../../assets/logo.png';
 
 export default function Cadastro() {
@@ -9,9 +10,36 @@ export default function Cadastro() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [showPassword, setShowPassword] = useState(false);
+  const navigation = useNavigation();
 
-  const navigation = useNavigation(); 
+  // Função para lidar com o envio do formulário
+  const handleRegister = async () => {
+    if (!username || !email || !password || !confirmPassword) {
+      Alert.alert("Erro", "Por favor, preencha todos os campos");
+      return;
+    } 
+    if (password !== confirmPassword) {
+      Alert.alert("Erro", "As senhas não coincidem");
+      return;
+    }
+
+    try {
+      // Fazendo a requisição POST para o endpoint da API
+      const response = await axios.post('https://traveler-api-n420.onrender.com/auth/registrar', {
+        nome: username,
+        email: email,
+        senha: password
+      });
+
+      if (response.status === 200) {
+        Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
+        navigation.navigate('AddNovaViagem');  // Navega para a tela de AddNovaViagem após o cadastro
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Erro", "Ocorreu um erro ao tentar cadastrar.");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -41,7 +69,6 @@ export default function Cadastro() {
           style={styles.input}
           placeholder="Nova senha"
           placeholderTextColor="white"
-          onPress={() => setShowPassword(!showPassword)}
           value={password}
           onChangeText={(text) => setPassword(text)}       
         />
@@ -55,8 +82,8 @@ export default function Cadastro() {
         />
       </View>
 
-      <TouchableOpacity style={styles.botaoCadastrar}>
-        <Text style={styles.textobotao}>Cadastrar - se</Text>
+      <TouchableOpacity style={styles.botaoCadastrar} onPress={handleRegister}>
+        <Text style={styles.textobotao}>Cadastrar-se</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
