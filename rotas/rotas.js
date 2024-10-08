@@ -2,8 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Login from "../src/modules/login/view/login";
 import Cadastro from "../src/modules/cadastro/view/cadastro";
-import AddNovaViagem from "../components/AddNovaViagem/AddNovaViagem.js";
-import { ModalViagem } from "../components/modal/index.js";
+import AddNovaViagem from "../src/modules/AddNovaViagem/view/AddNovaViagem.jsx";
+import { ModalViagem } from "../src/modules/modal/";
 
 const Stack = createNativeStackNavigator();
 
