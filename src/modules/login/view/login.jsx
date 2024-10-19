@@ -51,9 +51,9 @@ export default function Login() {
               onPress={() => setHidePass(!hidePass)}
             >
               {hidePass ? (
-                <Ionicons name="eye" color="#FFF" size={25} />
-              ) : (
                 <Ionicons name="eye-off" color="#FFF" size={25} />
+              ) : (
+                <Ionicons name="eye" color="#FFF" size={25} />
               )}
             </TouchableOpacity>
           </View>

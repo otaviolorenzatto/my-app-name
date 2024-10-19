@@ -7,13 +7,11 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
-  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import logo from "../../../../assets/logo.png";
 import { cadastroControllerImpl } from "../di/di"; 
 import { Ionicons } from '@expo/vector-icons';
-
 
 export default function Cadastro() {
   const controller = cadastroControllerImpl(); 
@@ -59,9 +57,9 @@ export default function Cadastro() {
               onPress={() => setHidePass(!hidePass)}
             >
               {hidePass ? (
-                <Ionicons name="eye" color="#FFF" size={25} />
-              ) : (
                 <Ionicons name="eye-off" color="#FFF" size={25} />
+              ) : (
+                <Ionicons name="eye" color="#FFF" size={25} />
               )}
             </TouchableOpacity>
           </View>
@@ -80,9 +78,9 @@ export default function Cadastro() {
               onPress={() => setHidePass(!hidePass)}
             >
               {hidePass ? (
-                <Ionicons name="eye" color="#FFF" size={25} />
-              ) : (
                 <Ionicons name="eye-off" color="#FFF" size={25} />
+              ) : (
+                <Ionicons name="eye" color="#FFF" size={25} />
               )}
             </TouchableOpacity>
           </View>

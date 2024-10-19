@@ -1,10 +1,13 @@
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useState, useCallback } from "react";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setToken } from "../../../core/domain/model/jwtToken";
 
-const useLoginController = (loginUseCase) => {
+const loginController = (loginUseCase) => () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigation = useNavigation();
 
   useFocusEffect(
@@ -30,7 +33,9 @@ const useLoginController = (loginUseCase) => {
 
       if (response?.token) {
         Alert.alert("Sucesso", "Login realizado com sucesso!");
-        navigation.navigate("AddNovaViagem");
+        navigation.navigate("Viagem");
+
+        setToken(response.token);
       } else {
         Alert.alert("Erro", "Credenciais inválidas.");
       }
@@ -50,4 +55,4 @@ const useLoginController = (loginUseCase) => {
   };
 };
 
-export default useLoginController;
+export default loginController;

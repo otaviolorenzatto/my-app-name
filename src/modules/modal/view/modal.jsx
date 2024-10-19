@@ -1,24 +1,25 @@
 import React from "react";
 import { View, StyleSheet, Animated, TouchableOpacity, Image } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import flecha from "./../../assets/flechaesquerda.png";
+import flecha from "../../../../assets/flechaesquerda.png";
+import { useNavigation } from "@react-navigation/native"; 
+import useModalController from "../controller/modalController"; 
 
 export function ModalViagem({ fechar }) {
+  const { salvaCidade, handleSelectCity } = useModalController(fechar); 
+  const navigation = useNavigation(); 
+
   return (
     <View style={styles.container}>
-
       <TouchableOpacity style={styles.botaoinvisivel} onPress={fechar}></TouchableOpacity>
 
       <View style={styles.conteudopesquisa}>
-
         <Animated.View style={[styles.linha]} />
 
         {/* GooglePlacesAutocomplete */}
         <GooglePlacesAutocomplete
           placeholder="Qual o seu destino?"
-          onPress={(data, details = null) => {
-            console.log(data, details);
-          }}
+          onPress={(data, details = null) => handleSelectCity(data.description)}
           query={{
             key: "AIzaSyDgRNpVHxeabrd7SvG6WgALeXiSi5-JdAs",
             language: "pt-BR",
@@ -50,17 +51,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#00050D",
     flex: 1,
   },
-
   botaoinvisivel: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    height: 100, 
+    height: 100,
     backgroundColor: "transparent",
     zIndex: 1,
   },
-
   conteudopesquisa: {
     width: "100%",
     height: "85%",
@@ -70,14 +69,12 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     zIndex: 2,
   },
-
   linha: {
     width: "15%",
     height: 3,
     backgroundColor: "rgba(255,255,255,0.50)",
     marginTop: 7,
   },
-
   textopesquisa: {
     width: 320,
     backgroundColor: "#00050D",
@@ -87,29 +84,26 @@ const styles = StyleSheet.create({
     paddingLeft: 65,
     color: "rgba(255,255,255,0.65)",
     alignSelf: "center",
-    zIndex: 1, 
+    zIndex: 1,
   },
-
   suggestionList: {
     backgroundColor: "#071222",
     borderRadius: 20,
     width: 320,
     alignSelf: "center",
   },
-
   fundobotao: {
     position: 'absolute',
-    left: 15, 
+    left: 15,
     top: 30,
-    zIndex: 3,  
+    zIndex: 3,
   },
-
   fundoicone: {
     width: 25,
     height: 25,
     position: 'absolute',
-    left: 35,  
-    top: 20,   
+    left: 35,
+    top: 20,
     zIndex: 3,
   },
 });
