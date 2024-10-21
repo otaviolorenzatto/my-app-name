@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -12,9 +12,10 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import { Calendar } from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import { cadastroViagemControllerImpl } from "../di/di";
 import { useNavigation } from "@react-navigation/native";
+import {ptBR} from "../utils/localeCalendarConfig";
 
 import marcacaomapa from "../../../../assets/marcacaomapa.png";
 import calendarioida from "../../../../assets/calendarioida.png";
@@ -22,9 +23,13 @@ import calendariovolta from "../../../../assets/calendariovolta.png";
 import logo from "../../../../assets/logo.png";
 import flechaesquerda from "../../../../assets/flechaesquerda.png";
 
+LocaleConfig.locales["pt-br"] = ptBR;
+LocaleConfig.defaultLocale = "pt-br";
+
 export default function CadastroNovaViagem() {
   const navigation = useNavigation();
   const controller = cadastroViagemControllerImpl(); // Controlador instanciado
+  const [dataIda, setDataIda] = useState(null);
 
   return (
     <KeyboardAvoidingView
@@ -77,20 +82,11 @@ export default function CadastroNovaViagem() {
 
             {controller.isCalendarVisible && controller.selectedCalendar === "ida" && (
               <Calendar
-                style={styles.calendar}
-                headerStyle={{
-                  borderBottomWidth: 0.5,
-                  borderBottomColor: "#E8E8E8",
-                  paddingBottom: 10,
-                  marginBottom: 10,
-                }}
-                theme={{
-                  textMonthFontSize: 18,
-                  monthTextColor: "#E8E8E8",
-                  todayTextColor: "#F06543",
-                  selectedDayBackgroundColor: "#F06543",
-                  selectedDayTextColor: "#E8E8E8",
-                }}
+                style={styles.calendario}
+                headerStyle={styles.calendarioHeader}                                  
+                theme={styles.temacalendario}
+                minDate={new Date().toDateString()}
+                hideExtraDays={true}
                 onDayPress={(day) => controller.handleConfirmIda(new Date(day.dateString))}
               />
             )}
@@ -107,22 +103,13 @@ export default function CadastroNovaViagem() {
 
             {controller.isCalendarVisible && controller.selectedCalendar === "volta" && (
               <Calendar
-                style={styles.calendar}
-                headerStyle={{
-                  borderBottomWidth: 0.5,
-                  borderBottomColor: "#E8E8E8",
-                  paddingBottom: 10,
-                  marginBottom: 10,
-                }}
-                theme={{
-                  textMonthFontSize: 18,
-                  monthTextColor: "#E8E8E8",
-                  todayTextColor: "#F06543",
-                  selectedDayBackgroundColor: "#F06543",
-                  selectedDayTextColor: "#E8E8E8",
-                }}
-                onDayPress={(day) => controller.handleConfirmVolta(new Date(day.dateString))}
-              />
+              style={styles.calendario}
+              headerStyle={styles.calendarioHeader}                                  
+              theme={styles.temacalendario}
+              minDate={new Date().toDateString()}
+              hideExtraDays={true}
+              onDayPress={(day) => controller.handleConfirmVolta(new Date(day.dateString))}
+            />
             )}
 
             <View style={styles.linha} />
@@ -266,6 +253,25 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 20,
     fontWeight: "bold",
+  },
+  calendarioHeader: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#E8E8E8",
+    paddingBottom: 10,
+    marginBottom: 10,
+  },
+  temacalendario: {
+    textMonthFontSize: 18,  
+    monthTextColor: "#E8E8E8",
+    todayTextColor: "#F06543",
+    selectedDayBackgroundColor: "#F06543",
+    selectedDayTextColor: "#E8E8E8",
+    arrowColor: "#FFFF",
+    calendarBackground: "transparent",
+    textDayStyle: {
+      color: "#FFFF",
+    },
+    textDisabledColor: "#717171",
   },
 });
 
